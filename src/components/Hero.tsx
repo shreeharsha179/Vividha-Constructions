@@ -1,9 +1,40 @@
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import heroImage from '../assets/hero.png';
 
 const Hero = () => {
+    const sectionRef = useRef<HTMLElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start start", "end start"]
+    });
+    const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+    const textY = useTransform(scrollYProgress, [0, 0.5], ['0%', '20%']);
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.3,
+                delayChildren: 0.5
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 40 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.8, ease: "easeOut" as const }
+        }
+    };
 
     return (
         <section
+            ref={sectionRef}
             id="home"
             style={{
                 position: 'relative',
@@ -16,62 +47,74 @@ const Hero = () => {
                 padding: 0,
             }}
         >
-            {/* Background Image */}
-            <div
+            {/* Video Background */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 2 }}
                 style={{
                     position: 'absolute',
                     top: 0,
                     left: 0,
                     width: '100%',
                     height: '100%',
-                    backgroundImage: `url(${heroImage})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    filter: 'brightness(0.4)',
                     zIndex: -1,
+                }}
+            >
+                <video
+                    ref={videoRef}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    poster={heroImage}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        filter: 'brightness(0.35)',
+                    }}
+                >
+                    <source src="/hero-bg.mp4" type="video/mp4" />
+                </video>
+            </motion.div>
+
+            {/* Gradient overlay */}
+            <div
+                style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '30%',
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)',
+                    zIndex: 0,
                 }}
             />
 
-            {/* 
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          transform: 'translate(-50%, -50%)',
-          zIndex: -1,
-          filter: 'brightness(0.4)',
-        }}
-      >
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-monitor-close-up-1728-large.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      */}
-
-            <div className="container" style={{ textAlign: 'center', zIndex: 1 }}>
-                <h1
-                    className="fade-in"
+            <motion.div
+                className="container"
+                style={{ textAlign: 'center', zIndex: 1, opacity: textOpacity, y: textY }}
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+            >
+                <motion.h1
+                    variants={itemVariants}
                     style={{
                         fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
                         fontWeight: '800',
                         lineHeight: 1.1,
                         marginBottom: '1.5rem',
                         letterSpacing: '-0.025em',
+                        textShadow: '0 2px 20px rgba(0,0,0,0.3)',
                     }}
                 >
                     Building Dreams,<br />
                     <span style={{ color: 'var(--primary)' }}>One Brick at a Time</span>
-                </h1>
-                <p
-                    className="fade-in"
+                </motion.h1>
+                <motion.p
+                    variants={itemVariants}
                     style={{
                         fontSize: '1.25rem',
                         marginBottom: '2.5rem',
@@ -79,28 +122,44 @@ const Hero = () => {
                         marginLeft: 'auto',
                         marginRight: 'auto',
                         opacity: 0.9,
-                        animationDelay: '0.2s',
+                        textShadow: '0 1px 10px rgba(0,0,0,0.2)',
                     }}
                 >
                     Premium residential and commercial construction services tailored to your vision.
-                </p>
-                <div
-                    className="fade-in"
+                </motion.p>
+                <motion.div
+                    variants={itemVariants}
                     style={{
                         display: 'flex',
                         gap: '1rem',
                         justifyContent: 'center',
-                        animationDelay: '0.4s',
                     }}
                 >
-                    <a href="#projects" className="btn btn-primary">
+                    <motion.a
+                        href="#projects"
+                        className="btn btn-primary"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
                         View Our Work
-                    </a>
-                    <a href="#contact" className="btn btn-outline">
+                    </motion.a>
+                    <motion.a
+                        href="#contact"
+                        className="btn btn-outline"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
                         Contact Us
-                    </a>
+                    </motion.a>
+                </motion.div>
+            </motion.div>
+
+            {/* Scroll down indicator */}
+            <a href="#services" className="scroll-indicator">
+                <div className="scroll-indicator-mouse">
+                    <div className="scroll-indicator-wheel" />
                 </div>
-            </div>
+            </a>
         </section>
     );
 };
