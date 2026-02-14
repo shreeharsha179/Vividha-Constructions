@@ -103,11 +103,11 @@ const Hero = () => {
                     variants={itemVariants}
                     style={{
                         fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
-                        fontWeight: '800',
+                        fontWeight: 800,
                         lineHeight: 1.1,
                         marginBottom: '1.5rem',
                         letterSpacing: '-0.025em',
-                        textShadow: '0 2px 20px rgba(0,0,0,0.3)',
+                        textShadow: '0 4px 10px rgba(0,0,0,0.5)',
                     }}
                 >
                     Building Dreams,<br />
@@ -128,12 +128,8 @@ const Hero = () => {
                     Premium residential and commercial construction services tailored to your vision.
                 </motion.p>
                 <motion.div
+                    className="hero-buttons"
                     variants={itemVariants}
-                    style={{
-                        display: 'flex',
-                        gap: '1rem',
-                        justifyContent: 'center',
-                    }}
                 >
                     <motion.a
                         href="#projects"

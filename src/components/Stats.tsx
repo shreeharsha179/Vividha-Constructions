@@ -56,21 +56,25 @@ const Stats = () => {
         { number: 5, suffix: '+', label: 'Expert Team Members' },
     ];
 
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+            }
+        }
+    };
+
     return (
         <div className="stats-section">
             <div className="container">
                 <motion.div
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                        gap: '2rem',
-                        position: 'relative',
-                        zIndex: 1,
-                    }}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    className="stats-grid"
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
                 >
                     {stats.map((stat, index) => (
                         <motion.div

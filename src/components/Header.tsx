@@ -41,8 +41,8 @@ const Header = () => {
           VIVIDHA<span style={{ color: 'var(--primary)' }}>CONSTRUCTIONS</span>
         </motion.a>
 
-        <nav>
-          <ul style={{ display: 'flex', gap: '2rem' }}>
+        <nav className="header-nav">
+          <ul>
             {['Home', 'Services', 'Projects', 'Contact'].map((item, index) => (
               <motion.li
                 key={item}

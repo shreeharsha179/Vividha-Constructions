@@ -108,14 +108,7 @@ const Contact = () => {
                 </motion.div>
 
                 <motion.div
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns: '1fr 1.2fr',
-                        gap: '0',
-                        borderRadius: '20px',
-                        overflow: 'hidden',
-                        boxShadow: '0 25px 60px -12px rgba(0, 0, 0, 0.15)',
-                    }}
+                    className="contact-grid"
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -273,7 +266,7 @@ const Contact = () => {
 
                         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                             {/* Name & Email row */}
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                            <div className="form-row">
                                 <motion.div
                                     style={{ position: 'relative' }}
                                     initial={{ opacity: 0, y: 15 }}

@@ -41,14 +41,7 @@ const Footer = () => {
 
             <div className="container">
                 <motion.div
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns: '2fr 1fr 1fr 1fr',
-                        gap: '4rem',
-                        marginBottom: '3rem',
-                        borderBottom: '1px solid rgba(255,255,255,0.1)',
-                        paddingBottom: '3rem'
-                    }}
+                    className="footer-grid"
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
@@ -138,13 +131,7 @@ const Footer = () => {
                 </motion.div>
 
                 <motion.div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        color: '#6b7280',
-                        fontSize: '0.88rem',
-                    }}
+                    className="footer-bottom"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
